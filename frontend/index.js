@@ -5,7 +5,9 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   const currentYear = new Date().getFullYear()
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
 
-
+  document.addEventListener('DOMContentLoaded', function () {
+    fetchData();
+  });
 
   async function fetchData() {
     try {
@@ -26,7 +28,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     const combinedData = dataA.map(learnerA => {
       const mentors = learnerA.mentors.map(mentorID => {
         const mentorB = dataB.find(mentor => mentor.id === mentorID);
-        return mentorB? mentorB.fullName : null;
+        return mentorB ? mentorB.fullName : null;
       });
       return {
         id: learnerA.id,
@@ -52,19 +54,27 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     emailSpan.textContent = `Email: ${learner.email}`;
 
     const fullNameSpan = document.createElement('span');
-    idSpan.textContent = `Full Name: ${learner.fullName}`;
+    fullNameSpan.textContent = `Full Name: ${learner.fullName}`;
 
     //create ul for mentor list
     const mentorList = document.createElement('ul');
     learner.mentors.forEach(mentor => {
-      const mentorItem = 
-    })
+      const mentorItem = document.createElement('li');
+      mentorItem.textContent = mentor;
+      mentorList.appendChild(mentorItem)
+    });
+    
+    learnerCardElement.appendChild(idSpan);
+    learnerCardElement.appendChild(emailSpan);
+    learnerCardElement.appendChild(fullNameSpan);
+    learnerCardElement.appendChild(mentorList);
 
     return learnerCardElement;
   }
 
   function renderLearnerCards(data) {
     const container = document.querySelector('.learnerContainer')
+    container.textContent = '';
     // loop over data and create cards
     data.forEach(learner => {
       const learnerCard = createLearnerCard(learner);
@@ -72,13 +82,20 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     })
   }
 
-  document.querySelector('.learnerContainer').addEventListener('click', function (event) {
+  document.addEventListener('DOMContentLoaded', function () {
+    fetchData();
+
+  document.querySelector('.cards').addEventListener('click', function (event) {
     const target = event.target;
     //to check if click is on specific element
-    if (target.classList.contains('someClassName')) {
+    if (target.classList.contains('learner-card')) {
+      target.classList.toggle('selected');
 
+      const idSpan = target.querySelector('span:first-child');
+      idSpan.textContent = `ID: ${learner.id} - Sele`
     }
   })
+})
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
