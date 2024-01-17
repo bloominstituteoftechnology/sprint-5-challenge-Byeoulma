@@ -47,6 +47,9 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     const learnerCardElement = document.createElement('div');
     learnerCardElement.classList.add('card');
 
+    const h3 = document.createElement('h3');
+    h3.textContent = `${learner.fullName}`;
+
     const idSpan = document.createElement('span');
     idSpan.textContent = `ID: ${learner.id}`;
 
@@ -64,10 +67,12 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       mentorList.appendChild(mentorItem)
     });
 
+    learnerCardElement.appendChild(h3)
     learnerCardElement.appendChild(idSpan);
     learnerCardElement.appendChild(emailSpan);
     learnerCardElement.appendChild(fullNameSpan);
     learnerCardElement.appendChild(mentorList);
+    
 
     return learnerCardElement;
   }
