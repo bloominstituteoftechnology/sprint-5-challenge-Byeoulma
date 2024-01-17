@@ -17,7 +17,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const dataA = responseA.data;
       const dataB = responseB.data;
       // continue with data processing
-      processData(dataA, dataB);
+      combinedData = processData(dataA, dataB);
     } catch (error) {
       console.log('Error fetching data:', error);
     }
@@ -45,7 +45,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   function createLearnerCard(learner) {
     // create HTML elements for the learner card
     const learnerCardElement = document.createElement('div');
-    learnerCardElement.classList.add('learner-card');
+    learnerCardElement.classList.add('card');
 
     const idSpan = document.createElement('span');
     idSpan.textContent = `ID: ${learner.id}`;
@@ -63,7 +63,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       mentorItem.textContent = mentor;
       mentorList.appendChild(mentorItem)
     });
-    
+
     learnerCardElement.appendChild(idSpan);
     learnerCardElement.appendChild(emailSpan);
     learnerCardElement.appendChild(fullNameSpan);
@@ -73,9 +73,15 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   }
 
   function renderLearnerCards(data) {
-    const container = document.querySelector('.learnerContainer')
-    container.textContent = '';
+    const container = document.querySelector('.cards')
+    
     // loop over data and create cards
+    if(!container) {
+      console.error('Container not found in the DOM.')
+      return;
+    }
+    container.innerHTML = '';
+
     data.forEach(learner => {
       const learnerCard = createLearnerCard(learner);
       container.appendChild(learnerCard);
@@ -92,10 +98,24 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       target.classList.toggle('selected');
 
       const idSpan = target.querySelector('span:first-child');
-      idSpan.textContent = `ID: ${learner.id} - Sele`
+      const learnerId = idSpan.textContent.replace('ID: ', '')
+      const learner = combinedData.find(learner => learner.id === parseInt(learnerId))
+      idSpan.textContent = `ID: ${learner.id} - ${learner.selected ? 'Selected' : 'Not Selected'}`
     }
   })
 })
+
+// style element
+
+const fontFaceDeclaration = `@font-face {
+  font-family: 'Titillium Web';
+  src: url('./TitilliumWeb.ttf');
+}`
+const styleElement = document.createElement('style');
+document.head.appendChild(styleElement);
+
+styleElement.textContent = fontFaceDeclaration;
+
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
