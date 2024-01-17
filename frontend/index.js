@@ -49,6 +49,11 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     const h3 = document.createElement('h3');
     h3.textContent = `${learner.fullName}`;
+    const h3div = document.createElement('div');
+    h3div.textContent = `${learner.email}`
+
+    const h4 = document.createElement('h4');
+    h4.classList.add('close');
 
     const idSpan = document.createElement('span');
     idSpan.textContent = `ID: ${learner.id}`;
@@ -67,11 +72,11 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       mentorList.appendChild(mentorItem)
     });
 
-    learnerCardElement.appendChild(h3)
-    learnerCardElement.appendChild(idSpan);
-    learnerCardElement.appendChild(emailSpan);
-    learnerCardElement.appendChild(fullNameSpan);
+    learnerCardElement.appendChild(h3);
+    learnerCardElement.appendChild(h3div);
+    learnerCardElement.appendChild(h4);
     learnerCardElement.appendChild(mentorList);
+    
     
 
     return learnerCardElement;
@@ -99,7 +104,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   document.querySelector('.cards').addEventListener('click', function (event) {
     const target = event.target;
     //to check if click is on specific element
-    if (target.classList.contains('learner-card')) {
+    if (target.classList.contains('card')) {
       target.classList.toggle('selected');
 
       const idSpan = target.querySelector('span:first-child');
