@@ -49,10 +49,10 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     idSpan.textContent = `ID: ${learner.id}`;
 
     const emailSpan = document.createElement('span');
-    emailSpan.textContent = `ID: ${learner.email}`;
+    emailSpan.textContent = `Email: ${learner.email}`;
 
     const fullNameSpan = document.createElement('span');
-    idSpan.textContent = `ID: ${learner.fullName}`;
+    idSpan.textContent = `Full Name: ${learner.fullName}`;
 
     //create ul for mentor list
     const mentorList = document.createElement('ul');
