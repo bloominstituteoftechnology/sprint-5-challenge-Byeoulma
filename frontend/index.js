@@ -1,18 +1,17 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
 
-  const footer = document.querySelector('footer')
-  const currentYear = new Date().getFullYear()
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+ 
 
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   fetchData();
-  // });
 
   let combinedData;
 
   async function fetchData() {
     try {
+      const footer = document.querySelector('footer')
+      const currentYear = new Date().getFullYear()
+      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+
       const [responseA, responseB] = await Promise.all([
       axios.get('http://localhost:3003/api/learners'),
       axios.get('http://localhost:3003/api/mentors'),
@@ -27,6 +26,15 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     }
   }
 
+  async function firstCardRender() {
+   try { 
+    const bob = await screen.findByText('Bob Johnson', queryOptions, waitForOptions);
+    expect(bob).toBeInTheDocument();
+  } catch (error) {
+    console.error('Error in firstCardRender:', error)
+  }
+  }
+
   // function to combine the data from Endpoint A and EndpointB
   function processData(dataA, dataB) {
     const combinedData = dataA.map(learnerA => {
@@ -38,7 +46,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         id: learnerA.id,
         email: learnerA.email,
         fullName: learnerA.fullName,
-        mentors: me
+        mentors: mentors,
       }
     })
     // Call function to render learner cards
@@ -102,6 +110,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       container.appendChild(learnerCard);
     })
   }
+
   let learner;
   document.addEventListener('DOMContentLoaded', function () {
     fetchData();

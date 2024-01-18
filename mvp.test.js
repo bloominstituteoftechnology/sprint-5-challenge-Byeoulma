@@ -33,7 +33,7 @@ async function firstCardRender() {
 
 describe('Sprint Challenge 5', () => {
   describe('Sprint setup', () => {
-    test('👉 [1] Version of challenge is valid', () => {
+    test.only('👉 [1] Version of challenge is valid', () => {
       const versions = ['1.0.0']
       expect(versions.indexOf(version)).toBeGreaterThan(-1)
     })
