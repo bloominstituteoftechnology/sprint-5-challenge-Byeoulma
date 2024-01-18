@@ -5,14 +5,18 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   const currentYear = new Date().getFullYear()
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
 
-  document.addEventListener('DOMContentLoaded', function () {
-    fetchData();
-  });
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   fetchData();
+  // });
+
+  let combinedData;
 
   async function fetchData() {
     try {
-      const responseA = await axios.get('http://localhost:3003/api/learners');
-      const responseB = await axios.get('http://localhost:3003/api/mentors');
+      const [responseA, responseB] = await Promise.all([
+      axios.get('http://localhost:3003/api/learners'),
+      axios.get('http://localhost:3003/api/mentors'),
+      ]);
       // access response data using responses
       const dataA = responseA.data;
       const dataB = responseB.data;
@@ -34,7 +38,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         id: learnerA.id,
         email: learnerA.email,
         fullName: learnerA.fullName,
-        mentors
+        mentors: me
       }
     })
     // Call function to render learner cards
@@ -53,7 +57,8 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     h3div.textContent = `${learner.email}`
 
     const h4 = document.createElement('h4');
-    h4.classList.add('close');
+    h4.classList.add('closed');
+    h4.textContent = `Mentors`
 
     const idSpan = document.createElement('span');
     idSpan.textContent = `ID: ${learner.id}`;
@@ -97,7 +102,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       container.appendChild(learnerCard);
     })
   }
-
+  let learner;
   document.addEventListener('DOMContentLoaded', function () {
     fetchData();
 
@@ -105,12 +110,25 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     const target = event.target;
     //to check if click is on specific element
     if (target.classList.contains('card')) {
+      const allCards = document.querySelectorAll('.card');
+      allCards.forEach(card => card.classList.remove('selected'));
+      
       target.classList.toggle('selected');
 
       const idSpan = target.querySelector('span:first-child');
+      if(idSpan) {
       const learnerId = idSpan.textContent.replace('ID: ', '')
-      const learner = combinedData.find(learner => learner.id === parseInt(learnerId))
-      idSpan.textContent = `ID: ${learner.id} - ${learner.selected ? 'Selected' : 'Not Selected'}`
+      learner = combinedData.find(learner => learner.id === parseInt(learnerId));
+      
+
+      if(learner) {
+        idSpan.textContent = `ID: ${learner.id} - Selected`;
+        document.querySelector('.info').textContent = `The selected learner is ${learner.fullName}`;
+      }
+      }
+      
+    } else {
+      console.error('No span element found as the first child.')
     }
   })
 })
