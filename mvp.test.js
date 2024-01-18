@@ -33,11 +33,11 @@ async function firstCardRender() {
 
 describe('Sprint Challenge 5', () => {
   describe('Sprint setup', () => {
-    test.only('👉 [1] Version of challenge is valid', () => {
+    test('👉 [1] Version of challenge is valid', () => {
       const versions = ['1.0.0']
       expect(versions.indexOf(version)).toBeGreaterThan(-1)
     })
-    test('👉 [2] The sprintChallenge5 function does not crash', async () => {
+    test.only('👉 [2] The sprintChallenge5 function does not crash', async () => {
       await expect(sprintChallenge5()).resolves.not.toThrowError()
     })
     test('👉 [3] The code inside the script is clean', () => {

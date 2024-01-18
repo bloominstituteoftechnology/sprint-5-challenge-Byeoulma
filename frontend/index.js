@@ -1,16 +1,20 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
 
- 
+  const footer = document.querySelector('footer')
+  const currentYear = new Date().getFullYear()
+  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
 
 
   let combinedData;
-
+  async function firstCardRender() {
+    const bob = await screen.findByText('Bob Johnson', queryOptions, waitForOptions)
+    expect(bob).toBeInTheDocument()
+  }
+  
   async function fetchData() {
     try {
-      const footer = document.querySelector('footer')
-      const currentYear = new Date().getFullYear()
-      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+      
 
       const [responseA, responseB] = await Promise.all([
       axios.get('http://localhost:3003/api/learners'),
