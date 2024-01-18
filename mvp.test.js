@@ -37,7 +37,7 @@ describe('Sprint Challenge 5', () => {
       const versions = ['1.0.0']
       expect(versions.indexOf(version)).toBeGreaterThan(-1)
     })
-    test.only('👉 [2] The sprintChallenge5 function does not crash', async () => {
+    test('👉 [2] The sprintChallenge5 function does not crash', async () => {
       await expect(sprintChallenge5()).resolves.not.toThrowError()
     })
     test('👉 [3] The code inside the script is clean', () => {
