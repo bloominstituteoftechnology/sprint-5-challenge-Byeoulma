@@ -1,6 +1,5 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
-  const {screen} = require('@testing-library/dom');
 
 
   function updateFooterText() {
@@ -21,8 +20,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   
   async function fetchData() {
     try {
-      
-
       const [responseA, responseB] = await Promise.all([
       axios.get('http://localhost:3003/api/learners'),
       axios.get('http://localhost:3003/api/mentors'),
@@ -38,6 +35,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   }
   
 
+  
   async function firstCardRender(queryOptions, waitForOptions) {
     try { 
       const bob = await screen.findByText((content, element) => {
@@ -49,8 +47,9 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       console.error('Error in firstCardRender:', error.message);
     }
   }
+ 
+  await firstCardRender();
   fetchData();
-  firstCardRender()
 
 
   // create function to take a single learner as an argument and returns a Learner Card
@@ -130,7 +129,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     // function to combine the data from Endpoint A and EndpointB
     function processData(dataA, dataB) {
-      const combinedData = dataA.map(learnerA => {
+      const combinedData = dataA.map((learnerA) => {
         const mentors = learnerA.mentors.map(mentorID => {
           const mentorB = dataB.find(mentor => mentor.id === mentorID);
           return mentorB ? mentorB.fullName : null;
@@ -144,10 +143,12 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       })
       // Call function to render learner cards
       renderLearnerCards(combinedData);
+      return combinedData;
     }
 
 
   let learner;
+
   document.addEventListener('DOMContentLoaded', function () { const cardsContainer = document.querySelector('.cards');
 
 
