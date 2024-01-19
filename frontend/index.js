@@ -1,5 +1,8 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
+  const {screen} = require('@testing-library/dom');
+
+
   function updateFooterText() {
     const footer = document.querySelector('footer');
     if (footer) {
@@ -139,7 +142,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
           mentors: mentors,
         }
       })
-      
       // Call function to render learner cards
       renderLearnerCards(combinedData);
     }
@@ -192,7 +194,6 @@ document.head.appendChild(styleElement);
 
 styleElement.textContent = fontFaceDeclaration;
 
-console.log('Mentors:', learner.mentors);
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
