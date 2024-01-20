@@ -5,7 +5,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     const footer = document.querySelector('footer');
     if (footer) {
       const currentYear = new Date().getFullYear();
-      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY 2023`;
     } else {
       console.error('Footer element not found in the DOM.');
     }
@@ -116,7 +116,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
  }
 
 
-
       function renderLearnerCards(data) {
     const container = document.querySelector('.cards')
     
@@ -140,64 +139,14 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     console.log('Error creating learner card:', error)
   }
 }
-
-
-
-// style element
-const fontFaceDeclaration = `@font-face {
-  font-family: 'Titillium Web';
-  src: url('./TitilliumWeb.ttf');
-}`;
-const styleElement = document.createElement('style');
-document.head.appendChild(styleElement);
-
-styleElement.textContent = fontFaceDeclaration;
-
-
-
-
-  function createLearnerCard(learner) {
-    try {
-      const learnerCardElement = document.createElement('div');
-      learnerCardElement.classList.add('card');
   
-      const h3 = document.createElement('h3');
-      h3.textContent = learner.fullName;
-  
-      const h3div = document.createElement('div');
-      h3div.textContent = learner.email;
-  
-      const h4 = document.createElement('h4');
-      h4.classList.add('closed');
-      h4.textContent = `Mentors`;
-  
-      const mentorList = document.createElement('ul');
-  
-      learner.mentors.forEach((mentor) => {
-        const mentorItem = document.createElement('li');
-        mentorItem.textContent = mentor;
-        mentorList.appendChild(mentorItem);
-      });
-  
-      learnerCardElement.appendChild(h3);
-      learnerCardElement.appendChild(h3div);
-      learnerCardElement.appendChild(h4);
-      learnerCardElement.appendChild(mentorList);
-  
-      return learnerCardElement;
-    } catch (error) {
-      console.error('Error creating learner card:', error);
-    }
-  }
-  
-
-  
-const cardsContainer = document.querySelector('.cards');
+  const cardsContainer = document.querySelector('.cards');
   
   cardsContainer.addEventListener('click', function (event) {
+   
     const target = event.target;
     const card = target.closest('.card');
-  
+    
     if (card) {
       const allCards = document.querySelectorAll('.card');
       allCards.forEach((c) => c.classList.remove('selected'));
@@ -206,31 +155,40 @@ const cardsContainer = document.querySelector('.cards');
   
       const idSpan = card.querySelector('h3');
       idSpan.classList.add('card-id');
+      
+    
+  
       if (idSpan) {
         const learnerId = idSpan.textContent;
         const learner = combinedData.find((learner) => learner.fullName === learnerId);
   
+        const infoElement = document.querySelector('.info');
+       
         if (learner) {
-          const infoElement = document.querySelector('.info');
-          if (infoElement) {
-            infoElement.textContent = `The selected learner is ${learner.fullName}`;
-          }
-        }  else if(!learner) {
-        document.querySelector('.info').textContent = `No learner is selected`;
+          infoElement.textContent = `The selected learner is ${learner.fullName}`;
+        } else {
+          infoElement.textContent = `No learner is selected`;
+        }
       }
-        
-      } 
     } else {
       console.error('No card element found.');
-    }
+    } 
   });
-
-
   
   updateFooterText();
+
+
+// style element
+const styleElement = document.createElement('style');
+document.head.appendChild(styleElement);
+
+const fontFaceDeclaration = `@font-face {
+  font-family: 'Titillium Web';
+  src: url('./TitilliumWeb.ttf');
+}`;
+
+styleElement.textContent = fontFaceDeclaration
  
-
-
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
