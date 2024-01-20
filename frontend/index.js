@@ -140,51 +140,59 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   }
 }
   
-  const cardsContainer = document.querySelector('.cards');
-  
-  cardsContainer.addEventListener('click', function (event) {
-    const target = event.target;
-    const card = target.closest('.card');
-  
-    if (card) {
-      const isSelected = card.classList.contains('selected');
-  
-      const allCards = document.querySelectorAll('.card');
-      allCards.forEach((c) => c.classList.remove('selected'));
-  
-      if (!isSelected) {
-        card.classList.add('selected');
-      }
-  
-      const idSpan = card.querySelector('h3');
-      idSpan.classList.toggle('card-id', !isSelected);
-  
-      const h4 = card.querySelector('h4');
+const cardsContainer = document.querySelector('.cards');
+cardsContainer.addEventListener('click', function (event) {
+  const target = event.target;
+  const card = target.closest('.card');
+  const h4 = target.closest('h4');
+
+  if (card) {
+    const isSelected = card.classList.contains('selected');
+
+    const allCards = document.querySelectorAll('.card');
+    allCards.forEach((c) => c.classList.remove('selected'));
+
+    if (!isSelected) {
+      card.classList.add('selected');
+    }
+
+    const idSpan = card.querySelector('h3');
+    idSpan.classList.toggle('card-id', !isSelected);
+
+    const selectedCard = document.querySelector('.card.selected');
+
+    const infoElement = document.querySelector('.info');
+    if (selectedCard) {
+      const learnerId = selectedCard.querySelector('h3').textContent;
+      const learner = combinedData.find((learner) => learner.fullName === learnerId);
+      infoElement.textContent = `The selected learner is ${learner.fullName}`;
+    } else {
+      infoElement.textContent = `No learner is selected`;
+    }
+  } else if (h4) {
+    const mentorList = h4.parentElement.querySelector('ul');
+    h4.classList.toggle('open');
+    mentorList.style.display = h4.classList.contains('open') ? 'block' : 'none';
+  } else {
+    console.error('No card or h4 element found.');
+  }
+});
+
+// Additional click event listener for h4 element
+cardsContainer.addEventListener('click', function (event) {
+  const target = event.target;
+  const h4 = target.closest('h4');
+  const card = target.closest('.card');
+
+  if (h4 && card) {
     const mentorList = card.querySelector('ul');
-    if (isSelected) {
-      
-      h4.classList.remove('open');
-      h4.classList.add('closed');
-      mentorList.style.display = 'none';
-    } else {
-      h4.classList.remove('closed');
-      h4.classList.add('open');
-      mentorList.style.display = 'block';
-    }
-      const selectedCard = document.querySelector('.card.selected');
-  
-      const infoElement = document.querySelector('.info');
-      if (selectedCard) {
-        const learnerId = selectedCard.querySelector('h3').textContent;
-        const learner = combinedData.find((learner) => learner.fullName === learnerId);
-        infoElement.textContent = `The selected learner is ${learner.fullName}`;
-      } else {
-        infoElement.textContent = `No learner is selected`;
-      }
-    } else {
-      console.error('No card element found.');
-    }
-  });
+    const isOpen = h4.classList.contains('open');
+
+    h4.classList.toggle('open', !isOpen);
+    h4.classList.toggle('closed', isOpen);
+    mentorList.style.display = isOpen ? 'none' : 'block';
+  }
+});
   
   updateFooterText();
 
