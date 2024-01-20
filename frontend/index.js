@@ -1,6 +1,15 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
 
+  function updateFooterText() {
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const currentYear = new Date().getFullYear();
+      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+    } else {
+      console.error('Footer element not found in the DOM.');
+    }
+  };
 
   // function to combine the data from Endpoint A and EndpointB
   let combinedData;
@@ -134,7 +143,6 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
 
 
-
 // style element
 const fontFaceDeclaration = `@font-face {
   font-family: 'Titillium Web';
@@ -145,38 +153,9 @@ document.head.appendChild(styleElement);
 
 styleElement.textContent = fontFaceDeclaration;
 
-const cardsContainer = document.querySelector('.cards');
 
-  if (!cardsContainer) {
-    console.error("Container with class 'cards' not found in DOM");
-    return;
-  }
 
-  cardsContainer.addEventListener('click', function (event) {
-    const target = event.target;
-    const card = target.closest('.card');
-  
-    if (card) {
-      const allCards = document.querySelectorAll('.card');
-      allCards.forEach((c) => c.classList.remove('selected'));
-  
-      card.classList.toggle('selected');
-  
-      const idSpan = card.querySelector('.card-id');
-    
-      if (idSpan) {
-        const learnerId = idSpan.textContent.replace('ID: ', '');
-        const learner = combinedData.find((learner) => learner.id === parseInt(learnerId));
-  
-        if (learner) {
-          idSpan.textContent = `ID: ${learner.id} - Selected`;
-          document.querySelector('.info').textContent = `The selected learner is ${learner.fullName}`;
-        }
-      }
-    } else {
-      console.error('No card element found.');
-    }
-  });
+
   function createLearnerCard(learner) {
     try {
       const learnerCardElement = document.createElement('div');
@@ -211,6 +190,10 @@ const cardsContainer = document.querySelector('.cards');
     }
   }
   
+
+  
+const cardsContainer = document.querySelector('.cards');
+  
   cardsContainer.addEventListener('click', function (event) {
     const target = event.target;
     const card = target.closest('.card');
@@ -222,6 +205,7 @@ const cardsContainer = document.querySelector('.cards');
       card.classList.toggle('selected');
   
       const idSpan = card.querySelector('h3');
+      idSpan.classList.add('card-id');
       if (idSpan) {
         const learnerId = idSpan.textContent;
         const learner = combinedData.find((learner) => learner.fullName === learnerId);
@@ -231,28 +215,21 @@ const cardsContainer = document.querySelector('.cards');
           if (infoElement) {
             infoElement.textContent = `The selected learner is ${learner.fullName}`;
           }
-        }
-      } else {
-        console.error('No h3 element found inside the card.');
+        }  else if(!learner) {
+        document.querySelector('.info').textContent = `No learner is selected`;
       }
+        
+      } 
     } else {
       console.error('No card element found.');
     }
   });
 
 
-function updateFooterText() {
-  const footer = document.querySelector('footer');
-  if (footer) {
-    const currentYear = new Date().getFullYear();
-    footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
-  } else {
-    console.error('Footer element not found in the DOM.');
-  }
-}
+  
+  updateFooterText();
+ 
 
-// Call the function to update the footer text
-updateFooterText();
 
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
