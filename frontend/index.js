@@ -116,13 +116,12 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
  }
 
 
-      function renderLearnerCards(data) {
-    const container = document.querySelector('.cards')
-    
-    // loop over data and create cards
-      try {
-        if(!container) {
-      console.error('Container not found in the DOM.')
+ function renderLearnerCards(data) {
+  const container = document.querySelector('.cards');
+
+  try {
+    if (!container) {
+      console.error('Container not found in the DOM.');
       return;
     }
     container.innerHTML = '';
@@ -132,15 +131,24 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         const learnerCard = createLearnerCard(learner);
         container.append(learnerCard);
       } catch (error) {
-      console.log('Error creating learner card:', error);
+        console.log('Error creating learner card:', error);
+      }
+    });
+
+    // If no learner card is selected, display the default message
+    const selectedCard = document.querySelector('.card.selected');
+    const infoElement = document.querySelector('.info');
+    if (!selectedCard) {
+      infoElement.textContent = 'No learner is selected';
     }
-  });
   } catch (error) {
-    console.log('Error creating learner card:', error)
+    console.log('Error creating learner card:', error);
   }
 }
-  
+
+
 const cardsContainer = document.querySelector('.cards');
+
 cardsContainer.addEventListener('click', function (event) {
   const target = event.target;
   const card = target.closest('.card');
