@@ -143,36 +143,35 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   const cardsContainer = document.querySelector('.cards');
   
   cardsContainer.addEventListener('click', function (event) {
-   
     const target = event.target;
     const card = target.closest('.card');
-    
+  
     if (card) {
+      const isSelected = card.classList.contains('selected');
+  
       const allCards = document.querySelectorAll('.card');
       allCards.forEach((c) => c.classList.remove('selected'));
   
-      card.classList.toggle('selected');
+      if (!isSelected) {
+        card.classList.add('selected');
+      }
   
       const idSpan = card.querySelector('h3');
-      idSpan.classList.add('card-id');
-      
-    
+      idSpan.classList.toggle('card-id', !isSelected);
   
-      if (idSpan) {
-        const learnerId = idSpan.textContent;
+      const selectedCard = document.querySelector('.card.selected');
+  
+      const infoElement = document.querySelector('.info');
+      if (selectedCard) {
+        const learnerId = selectedCard.querySelector('h3').textContent;
         const learner = combinedData.find((learner) => learner.fullName === learnerId);
-  
-        const infoElement = document.querySelector('.info');
-       
-        if (learner) {
-          infoElement.textContent = `The selected learner is ${learner.fullName}`;
-        } else {
-          infoElement.textContent = `No learner is selected`;
-        }
+        infoElement.textContent = `The selected learner is ${learner.fullName}`;
+      } else {
+        infoElement.textContent = `No learner is selected`;
       }
     } else {
       console.error('No card element found.');
-    } 
+    }
   });
   
   updateFooterText();

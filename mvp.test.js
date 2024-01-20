@@ -153,7 +153,7 @@ describe('Sprint Challenge 5', () => {
       fireEvent.click(card)
       expect(screen.queryByText('No learner is selected')).toBeVisible()
     })
-    test('👉 [19] <div class="card"> clicking on a card de-selects any other card that may be selected', async () => {
+    test('👉 [19] <div class="card"> clicking on a card de-selects any otherc ard that may be selected', async () => {
       await firstCardRender()
       const card1 = document.querySelector('.card:nth-child(1)')
       const card2 = document.querySelector('.card:nth-child(2)')
