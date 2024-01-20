@@ -159,6 +159,18 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const idSpan = card.querySelector('h3');
       idSpan.classList.toggle('card-id', !isSelected);
   
+      const h4 = card.querySelector('h4');
+    const mentorList = card.querySelector('ul');
+    if (isSelected) {
+      
+      h4.classList.remove('open');
+      h4.classList.add('closed');
+      mentorList.style.display = 'none';
+    } else {
+      h4.classList.remove('closed');
+      h4.classList.add('open');
+      mentorList.style.display = 'block';
+    }
       const selectedCard = document.querySelector('.card.selected');
   
       const infoElement = document.querySelector('.info');
